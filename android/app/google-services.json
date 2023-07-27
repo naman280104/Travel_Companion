@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "837347252903",
+    "project_id": "travel-companion-804ec",
+    "storage_bucket": "travel-companion-804ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837347252903:android:d1ae5ee4d790f86fc01982",
+        "android_client_info": {
+          "package_name": "com.example.travel_companion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837347252903-46thvco7eei2fnhbd5vja8jqsshs3kda.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUMdFwqsXrtFdVUi_WTPaVkQE3M2PFx-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837347252903-46thvco7eei2fnhbd5vja8jqsshs3kda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
