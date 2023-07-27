@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in_button/sign_in_button.dart';
+import 'package:travel_companion/services/auth_services.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -52,7 +53,9 @@ class _LoadingState extends State<Loading> {
               width: screenwidth*0.8,
               child: SignInButton(
                   Buttons.google,
-                  onPressed: (){},
+                  onPressed: (){
+                    AuthService().signInWithGoogle();
+                  },
                 ),
             ),
             Expanded(child: SizedBox(height: 1,),flex:1),

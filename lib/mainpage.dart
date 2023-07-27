@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_companion/common_widgets/travel_card.dart';
+import 'package:travel_companion/services/auth_services.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -28,7 +30,14 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Travel_card(),
+                  ],
+                ),
+                // child: Center(child: ElevatedButton(onPressed: (){AuthService().logout();}, child: Text("logout")),),
+              ),
             ),
             Container(
               width: double.infinity,
