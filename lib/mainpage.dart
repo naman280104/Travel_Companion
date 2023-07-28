@@ -27,6 +27,7 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       body: Container(
+        width: double.infinity,
         child: Column(
           children: [
             Expanded(
