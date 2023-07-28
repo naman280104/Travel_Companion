@@ -61,7 +61,141 @@ class _MainPageState extends State<MainPage> {
             borderRadius: BorderRadius.circular(100)
           ),
           child: IconButton(
-            onPressed: (){}, 
+            onPressed: (){
+              showModalBottomSheet(
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                context: context, 
+                builder: (context){
+                return Container(
+                  height: 600,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF8F8F8),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(20, 20, 20, 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Let's find your companions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),),
+                        SizedBox(height: 7,),
+                        Text("Create",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600,color: Colors.grey),),
+                        SizedBox(height: 16,),
+                        Row(
+                          children: [
+                            SizedBox(width: 10,),
+                            Text("From",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                            Container(
+                              width: screenwidth*0.25,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide()),
+                                color: Color(0xFFECECEC)
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                child: TextFormField(
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ),
+                            Expanded(child: SizedBox(width: 1,),flex: 2,),
+                            Text("To",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                            Container(
+                              width: screenwidth*0.25,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide()),
+                                color: Color(0xFFECECEC)
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                child: TextFormField(
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ),
+                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                          ],
+                        ),
+                        SizedBox(height:20),
+                        Row(
+                          children: [
+                            SizedBox(width: 10,),
+                            Text("Mode of Transport",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                            Container(
+                              width: screenwidth*0.3,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide()),
+                                color: Color(0xFFECECEC)
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                child: TextFormField(
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ),
+                            Expanded(child: SizedBox(width: 1,),flex: 3,),
+                          ],
+                        ),
+                        SizedBox(height: 20,),
+                        Row(
+                          children: [
+                            SizedBox(width: 10,),
+                            Text("Date & Time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                            Container(
+                              width: screenwidth*0.35,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide()),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(""),
+                                  IconButton(onPressed: (){}, icon: Icon(Icons.calendar_today))
+                                ],
+                              )
+                            ),
+                            Expanded(child: SizedBox(width: 1,),flex: 3,),
+                          ],
+                        ),
+                        SizedBox(height: 20,),
+                        Row(
+                          children: [
+                            SizedBox(width: 10,),
+                            Text("Duration",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                            Container(
+                              width: screenwidth*0.35,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide()),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(""),
+                                  IconButton(onPressed: (){}, icon: Icon(Icons.timer_outlined))
+                                ],
+                              )
+                            ),
+                            Expanded(child: SizedBox(width: 1,),flex: 3,),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              });
+            }, 
             icon: Icon(Icons.add,size: 30,)
             ),
         ),
