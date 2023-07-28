@@ -33,7 +33,9 @@ class _MainPageState extends State<MainPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Travel_card(),
+                    Travel_card(src: "Fukeshima Bhagabhaki Bhagura heloooo",dst: "Dhaum Dhum Dham Dhum Dhum Dhum",dur: Duration(hours: 1,minutes: 30),datetime: DateTime.now(),veh: "Helicopter",),
+                    Travel_card(src: "Fukeshima Bhagabhaki Bhagura heloooo",dst: "Dhaum Dhum Dham Dhum Dhum Dhum",dur: Duration(hours: 1,minutes: 30),datetime: DateTime.now(),veh: "Helicopter",),
+                    Travel_card(src: "Fukeshima Bhagabhaki Bhagura heloooo",dst: "Dhaum Dhum Dham Dhum Dhum Dhum",dur: Duration(hours: 1,minutes: 30),datetime: DateTime.now(),veh: "Helicopter",),
                   ],
                 ),
                 // child: Center(child: ElevatedButton(onPressed: (){AuthService().logout();}, child: Text("logout")),),
