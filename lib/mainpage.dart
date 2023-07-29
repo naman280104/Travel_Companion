@@ -1,5 +1,7 @@
+import 'package:duration_picker_dialog_box/duration_picker_dialog_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:travel_companion/common_widgets/travel_card.dart';
 import 'package:travel_companion/services/auth_services.dart';
 
@@ -62,12 +64,17 @@ class _MainPageState extends State<MainPage> {
           ),
           child: IconButton(
             onPressed: (){
+              List<String> friends = [];
+              DateTime? startdatetime;
+              Duration? dur;
               showModalBottomSheet(
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
                 context: context, 
                 builder: (context){
-                return Container(
+                  print(friends);
+                return StatefulBuilder(builder: ((context, setState){
+                  return Container(
                   height: 600,
                   decoration: BoxDecoration(
                     color: Color(0xFFF8F8F8),
@@ -149,9 +156,9 @@ class _MainPageState extends State<MainPage> {
                           children: [
                             SizedBox(width: 10,),
                             Text("Date & Time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                            Expanded(child: SizedBox(width: 1,),flex: 1,),
+                            Expanded(child: SizedBox(width: 1,),flex: 5,),
                             Container(
-                              width: screenwidth*0.35,
+                              width: screenwidth*0.53,
                               height: 40,
                               decoration: BoxDecoration(
                                 border: Border(bottom: BorderSide()),
@@ -159,8 +166,21 @@ class _MainPageState extends State<MainPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(""),
-                                  IconButton(onPressed: (){}, icon: Icon(Icons.calendar_today))
+                                  startdatetime!=null?Text(DateFormat('jm').format(startdatetime!)+" "+DateFormat('yMMMd').format(startdatetime!),style: TextStyle(fontSize: 16,color: Colors.black),):Text(""),
+                                  IconButton(onPressed: ()async {
+                                    DateTime? datepicked = await showDatePicker(
+                                      context: context, 
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime(2050),
+                                    );
+                                    TimeOfDay? timepicked = await showTimePicker(
+                                      context: context, 
+                                      initialTime: TimeOfDay.now()
+                                      );
+                                      startdatetime = DateTime(datepicked!.year,datepicked.month,datepicked.day,timepicked!.hour,timepicked.minute);
+                                      setState((){});
+                                  }, icon: Icon(Icons.calendar_today))
                                 ],
                               )
                             ),
@@ -182,18 +202,78 @@ class _MainPageState extends State<MainPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(""),
-                                  IconButton(onPressed: (){}, icon: Icon(Icons.timer_outlined))
+                                  dur!=null?
+                                  dur!.inDays==0?Text("${dur!.inHours.remainder(24)}H ${dur!.inMinutes.remainder(60)}M",style: TextStyle(fontSize: 16,color: Colors.black),):
+                                  Text("${dur!.inDays}D ${dur!.inHours.remainder(24)}H ${dur!.inMinutes.remainder(60)}M",style: TextStyle(fontSize: 16,color: Colors.black),)
+                                  :Text(""),
+                                  IconButton(onPressed: ()async{
+                                    Duration? durationpicked = await showDurationPicker(
+                                      context: context, 
+                                      initialDuration: Duration.zero);
+                                      dur = durationpicked; 
+                                    setState((){});
+                                  }, 
+                                  icon: Icon(Icons.timer_outlined))
                                 ],
                               )
                             ),
                             Expanded(child: SizedBox(width: 1,),flex: 3,),
                           ],
-                        )
+                        ),
+                        SizedBox(height: 20,),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Companions",style: TextStyle(color: Color(0xFF005864),fontSize: 20),),
+                                  IconButton(onPressed: (){
+                                    showDialog(context: context, builder: (context){
+                                      String name="";
+                                      return AlertDialog(
+                                        title: TextFormField(
+                                          onChanged: (val){
+                                            name=val;
+                                          },
+                                        ),
+                                        actions: [
+                                          ElevatedButton(onPressed: (){
+                                            if(name!="") friends.add(name);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Icon(Icons.check))
+                                        ],
+                                      );
+                                    });
+                                  }, icon: Icon(Icons.add))
+                                ],
+                              ),
+                              SizedBox(height: 10,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: friends.asMap().entries.map((e){
+                                  return Row(
+                                    children: [
+                                      Text("${e.key+1}. ${e.value}",style: TextStyle(fontSize: 20),),
+                                      IconButton(onPressed: (){
+                                        setState(() { 
+                                        friends.removeAt(e.key);
+                                        });
+                                      }, icon: Icon(Icons.delete))
+                                    ],
+                                  );
+                                }).toList(),
+                              )
+                            ],
+                          ))
                       ],
                     ),
                   ),
                 );
+                }));
               });
             }, 
             icon: Icon(Icons.add,size: 30,)
