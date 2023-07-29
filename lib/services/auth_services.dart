@@ -16,7 +16,7 @@ class AuthService{
       idToken: gAuth.idToken
     );
 
-    await FirebaseAuth.instance.signInWithCredential(credential).then((value) => Get.to(MainPage()));
+    await FirebaseAuth.instance.signInWithCredential(credential).then((value) => Get.offAll(MainPage()));
   }
 
   logout()async{

@@ -6,6 +6,7 @@ class DataService extends GetxController{
   final _db = FirebaseFirestore.instance;
 
   RxList<dynamic> cards = [].obs;
+  RxList<dynamic> docids = [].obs;
 
   @override
   void onReady() async{
@@ -18,11 +19,13 @@ class DataService extends GetxController{
     final docref = _db.collection("Travel_cards");
     await docref.snapshots().listen((event) {
       List<Map<String,dynamic>> lst=[];
+      List<String> ids=[];
       for(int i=0; i<event.docs.length; i++){
         lst.add(event.docs[i].data());
+        ids.add(event.docs[i].id);
       }
-      print(lst);
       cards.value=lst;
+      docids.value=ids;
     });
   }
 
@@ -52,6 +55,11 @@ class DataService extends GetxController{
       print(stackTrace);
     });
 
+  }
+
+
+  Future<void> delete(int index)async{
+    await _db.collection("Travel_cards").doc(docids[index]).delete();
   }
 
 }
