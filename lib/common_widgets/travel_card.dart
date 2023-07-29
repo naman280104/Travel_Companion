@@ -155,8 +155,8 @@ class _Travel_cardState extends State<Travel_card> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("On "+DateFormat('MMMd').format(widget.datetime),style: TextStyle(fontWeight: FontWeight.w500),),
-                        Text("At "+DateFormat('jm').format(widget.datetime),style: TextStyle(fontWeight: FontWeight.w500),)
+                        Text("On "+DateFormat('MMMd').format(widget.datetime),style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
+                        Text("At "+DateFormat('jm').format(widget.datetime),style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,)
                       ],
                     ),
                   ),
@@ -183,8 +183,8 @@ class _Travel_cardState extends State<Travel_card> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("Mode of Travel",style: TextStyle(fontWeight: FontWeight.w500),),
-                        Text(widget.veh,style: TextStyle(fontWeight: FontWeight.w500),overflow: TextOverflow.ellipsis,)
+                        Text("Mode of Travel",style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
+                        Text(widget.veh,style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,)
                       ],
                     ),
                   ),
@@ -212,8 +212,8 @@ class _Travel_cardState extends State<Travel_card> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text("Duration",style: TextStyle(fontWeight: FontWeight.w500),),
-                        widget.dur.inDays==0?Text("${widget.dur.inHours.remainder(24)}H ${widget.dur.inMinutes.remainder(60)}M",style: TextStyle(fontWeight: FontWeight.w500),):
-                        Text("${widget.dur.inDays}D ${widget.dur.inHours.remainder(24)}H ${widget.dur.inMinutes.remainder(60)}M",style: TextStyle(fontWeight: FontWeight.w500),)
+                        widget.dur.inDays==0?Text("${widget.dur.inHours.remainder(24)}H ${widget.dur.inMinutes.remainder(60)}M",style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,):
+                        Text("${widget.dur.inDays}D ${widget.dur.inHours.remainder(24)}H ${widget.dur.inMinutes.remainder(60)}M",style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,)
                       ],
                     ),
                   ),

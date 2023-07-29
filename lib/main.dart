@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_companion/firebase_options.dart';
-import 'package:travel_companion/loading_screen.dart';
-import 'package:travel_companion/mainpage.dart';
+import 'package:travel_companion/screens/loading_screen.dart';
+import 'package:travel_companion/screens/mainpage.dart';
 import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal
       ),
-      home: MainPage(),
+      home: Loading(),
     );
   }
 }

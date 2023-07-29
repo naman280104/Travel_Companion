@@ -2,8 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
-import 'package:travel_companion/loading_screen.dart';
-import 'package:travel_companion/mainpage.dart';
+import 'package:travel_companion/screens/loading_screen.dart';
+import 'package:travel_companion/screens/mainpage.dart';
 class AuthService{
 
   signInWithGoogle() async{
