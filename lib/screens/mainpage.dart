@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_companion/common_widgets/travel_card.dart';
 import 'package:travel_companion/services/auth_services.dart';
+import 'package:travel_companion/services/data_service.dart';
+import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -17,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     print(FirebaseAuth.instance.currentUser);
-
+    var dataservice = Get.put(DataService());
     var screenheight = MediaQuery.of(context).size.height;
     var screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -39,12 +41,12 @@ class _MainPageState extends State<MainPage> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Travel_card(src: "Fukeshima Bhagabhaki Bhagura heloooo",dst: "Dhaum Dhum Dham Dhum Dhum Dhum",dur: Duration(hours: 1,minutes: 30),datetime: DateTime.now(),veh: "Helicopter",),
-                    Travel_card(src: "Fukeshima Bhagabhaki Bhagura heloooo",dst: "Dhaum Dhum Dham Dhum Dhum Dhum",dur: Duration(hours: 1,minutes: 30),datetime: DateTime.now(),veh: "Helicopter",),
-                    Travel_card(src: "Fukeshima Bhagabhaki Bhagura heloooo",dst: "Dhaum Dhum Dham Dhum Dhum Dhum",dur: Duration(hours: 1,minutes: 30),datetime: DateTime.now(),veh: "Helicopter",),
-                  ],
+                child: Obx(
+                  ()=>Column(
+                    children: dataservice.cards.asMap().entries.map((e){
+                      return Travel_card(src: e.value["Source"], dst: e.value["Destination"], datetime: DateTime.fromMillisecondsSinceEpoch(e.value["date_time"]*1000), dur: e.value["Duration"], veh: e.value["Mode_of_transport"]);
+                    }).toList(),
+                  ),
                 ),
                 // child: Center(child: ElevatedButton(onPressed: (){AuthService().logout();}, child: Text("logout")),),
               ),
@@ -352,7 +354,10 @@ class _MainPageState extends State<MainPage> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.amber[900]
                                   ),
-                                  onPressed: (){}, 
+                                  onPressed: (){
+                                    if(from=="" || to=="" || dur==null || modeoftravel=="" || startdatetime==null) Get.snackbar('Error',"Fill all details",snackPosition: SnackPosition.BOTTOM);
+                                    else DataService().post(from, to, dur!, message, modeoftravel, startdatetime!, friends).then((value) => Navigator.of(context).pop());
+                                  }, 
                                   child: Text("POST")
                                   ),
                               )

@@ -7,7 +7,7 @@ class Travel_card extends StatefulWidget {
   final String src;
   final String dst;
   final DateTime datetime;
-  final Duration dur;
+  final String dur;
   final String veh;
   const Travel_card({super.key, required this.src, required this.dst, required this.datetime, required this.dur, required this.veh});
 
@@ -212,8 +212,7 @@ class _Travel_cardState extends State<Travel_card> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text("Duration",style: TextStyle(fontWeight: FontWeight.w500),),
-                        widget.dur.inDays==0?Text("${widget.dur.inHours.remainder(24)}H ${widget.dur.inMinutes.remainder(60)}M",style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,):
-                        Text("${widget.dur.inDays}D ${widget.dur.inHours.remainder(24)}H ${widget.dur.inMinutes.remainder(60)}M",style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,)
+                        Text(widget.dur,style: TextStyle(fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
                       ],
                     ),
                   ),
