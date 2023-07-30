@@ -17,12 +17,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  var searchQuery="";
+  bool mineCheckbox=false;
+  var dataservice = Get.put(DataService());
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser);
-    var dataservice = Get.put(DataService());
-    var screenheight = MediaQuery.of(context).size.height;
-    var screenwidth = MediaQuery.of(context).size.width;
+  var screenheight = MediaQuery.of(context).size.height;
+  var screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -42,19 +43,93 @@ class _MainPageState extends State<MainPage> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                child: Obx(
-                  ()=>Column(
-                    children: dataservice.cards.asMap().entries.map((e){
-                      return Container(
-                        padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
-                        child: FlipCard(
-                          fill: Fill.fillBack,
-                          front: Travel_card(src: e.value["Source"], dst: e.value["Destination"], datetime: DateTime.fromMillisecondsSinceEpoch(e.value["date_time"]*1000), dur: e.value["Duration"], veh: e.value["Mode_of_transport"]),
-                          back: Travel_card_back(displayname: e.value['posted_by'][0],email: e.value['posted_by'][1],companions: e.value["companions"],msg: e.value["Message"],index: e.key,),
+                child: Column(
+                  children: [
+                    Container(
+                    width: screenwidth*0.95,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1,color: Color(0xFFCFCFCF)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                            child: Icon(Icons.search),
+                          ),
+                          Container(
+                            width: screenwidth*0.7,
+                            child: TextField(
+                              onChanged:(val){
+                                setState(() {
+                                  searchQuery = val;
+                                });
+                                print(searchQuery);
+                              },
+                              autofocus: false,
+                              autocorrect: false,
+                              style: TextStyle(fontSize: 20,),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: mineCheckbox,
+                          onChanged: (bool? val){ setState(() {mineCheckbox = val!;});}
                         ),
-                      );
-                  }).toList(),
-                  ),
+                        Text("Show only my posts"),
+                      ],
+                    ),
+                    Obx(
+                      ()=>Column(
+                        children: dataservice.cards.asMap().entries.map( (e) {
+                          if (e.value["Source"].toString().toLowerCase().startsWith(searchQuery.toLowerCase())) {
+                            if (mineCheckbox){
+                              if (e.value["posted_by"][2]==FirebaseAuth.instance.currentUser!.email){
+                                return Container(
+                                  padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
+                                  child: FlipCard(
+                                    fill: Fill.fillBack,
+                                    front: Travel_card(src: e.value["Source"],
+                                        dst: e.value["Destination"],
+                                        datetime: DateTime.fromMillisecondsSinceEpoch(
+                                            e.value["date_time"] * 1000),
+                                        dur: e.value["Duration"],
+                                        veh: e.value["Mode_of_transport"]),
+                                    back: Container(),
+                                    // back: Travel_card_back(displayname: e.value['posted_by'][0],email: e.value['posted_by'][1],companions: e.value["companions"],msg: e.value["Message"],index: e.key,),
+                                  ),
+                                );
+                              }
+                              return Container();
+                            }
+                            else{
+                              return Container(
+                                padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
+                                child: FlipCard(
+                                  fill: Fill.fillBack,
+                                  front: Travel_card(src: e.value["Source"],
+                                      dst: e.value["Destination"],
+                                      datetime: DateTime.fromMillisecondsSinceEpoch(
+                                          e.value["date_time"] * 1000),
+                                      dur: e.value["Duration"],
+                                      veh: e.value["Mode_of_transport"]),
+                                  back: Container(),
+                                  // back: Travel_card_back(displayname: e.value['posted_by'][0],email: e.value['posted_by'][1],companions: e.value["companions"],msg: e.value["Message"],index: e.key,),
+                                ),
+                              );
+                            }
+                          }
+                          return Container();
+                        }
+                        ).toList(),
+                      ),
+                    ),
+                  ],
                 ),
                 // child: Center(child: ElevatedButton(onPressed: (){AuthService().logout();}, child: Text("logout")),),
               ),
@@ -113,50 +188,50 @@ class _MainPageState extends State<MainPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                              children: [
-                                SizedBox(width: 10,),
-                                Text("From",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                                Expanded(child: SizedBox(width: 1,),flex: 1,),
-                                Container(
-                                  width: screenwidth*0.25,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide()),
-                                    color: Color(0xFFECECEC)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
-                                    child: TextFormField(
-                                      style: TextStyle(fontSize: 20),
-                                      onChanged: (value) {
-                                        from=value;
-                                      },
+                                  children: [
+                                    SizedBox(width: 10,),
+                                    Text("From",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                                    Expanded(child: SizedBox(width: 1,),flex: 1,),
+                                    Container(
+                                      width: screenwidth*0.25,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        border: Border(bottom: BorderSide()),
+                                        color: Color(0xFFECECEC)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 20),
+                                          onChanged: (value) {
+                                            from=value;
+                                          },
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Expanded(child: SizedBox(width: 1,),flex: 2,),
-                                Text("To",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                                Expanded(child: SizedBox(width: 1,),flex: 1,),
-                                Container(
-                                  width: screenwidth*0.25,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide()),
-                                    color: Color(0xFFECECEC)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
-                                    child: TextFormField(
-                                      onChanged: (value) {
-                                        to=value;
-                                      },
-                                      style: TextStyle(fontSize: 20),
+                                    Expanded(child: SizedBox(width: 1,),flex: 2,),
+                                    Text("To",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                                    Expanded(child: SizedBox(width: 1,),flex: 1,),
+                                    Container(
+                                      width: screenwidth*0.25,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        border: Border(bottom: BorderSide()),
+                                        color: Color(0xFFECECEC)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                        child: TextFormField(
+                                          onChanged: (value) {
+                                            to=value;
+                                          },
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Expanded(child: SizedBox(width: 1,),flex: 1,),
-                              ],
-                            ),
+                                    Expanded(child: SizedBox(width: 1,),flex: 1,),
+                                  ],
+                              ),
                             SizedBox(height:20),
                             Row(
                               children: [

@@ -25,7 +25,7 @@ class _Travel_cardState extends State<Travel_card> {
   Widget build(BuildContext context) {
     var screensize = MediaQuery.of(context).size;
     return Container(
-        margin: EdgeInsets.fromLTRB(0, 10, 0, 8),
+        margin: EdgeInsets.fromLTRB(0, 2, 0, 16),
         width: screensize.width*0.9,
         decoration: BoxDecoration(
         color: Colors.white,
@@ -246,19 +246,15 @@ class _Travel_card_backState extends State<Travel_card_back> {
     if(await canLaunchUrl(url)){
       await launchUrl(url);
     }
-    else{
-      print(url);
-    }
   }
 
 
   @override
   Widget build(BuildContext context) {
     var screensize = MediaQuery.of(context).size;
-    print(screensize.height);
     return IntrinsicHeight(
       child: Container(
-          margin: EdgeInsets.fromLTRB(0, 10, 0, 8),
+          margin: EdgeInsets.fromLTRB(0, 2, 0, 16),
           width: screensize.width*0.9,
           padding: EdgeInsets.fromLTRB(10, 10, 10,10),
           decoration: BoxDecoration(
