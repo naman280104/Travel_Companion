@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
                 AuthService().logout();
               },
               icon: Icon(
-                CupertinoIcons.profile_circled,
+                Icons.logout,
                 size: 32,
               )),
         ],
@@ -120,7 +120,7 @@ class _MainPageState extends State<MainPage> {
                               .startsWith(searchQuery.toLowerCase())) {
                             if (mineCheckbox) {
                               if (e.value["posted_by"][2] ==
-                                  FirebaseAuth.instance.currentUser!.email) {
+                                  FirebaseAuth.instance.currentUser!.uid) {
                                 return Container(
                                   padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
                                   child: FlipCard(

@@ -334,6 +334,7 @@ class _Travel_card_backState extends State<Travel_card_back> {
                   decoration: BoxDecoration(
                       color: Colors.orange,
                       borderRadius: BorderRadius.circular(100)),
+                  child: Center(child: Text(widget.displayname[0].toUpperCase(),style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),)),
                 ),
                 SizedBox(
                   width: 10,
