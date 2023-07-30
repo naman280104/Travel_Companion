@@ -47,8 +47,8 @@ class DataService extends GetxController{
       "Duration":dur_str,
       "Mode_of_transport":mode_of_transport,
       "date_time":date_time.millisecondsSinceEpoch,
-      "posted_by":[FirebaseAuth.instance.currentUser!.displayName,FirebaseAuth.instance.currentUser!.email],
-      "companions":companions
+      "posted_by":[FirebaseAuth.instance.currentUser!.displayName,FirebaseAuth.instance.currentUser!.email,FirebaseAuth.instance.currentUser!.uid],
+      "companions":companions,
     };
     await _db.collection("Travel_cards").doc().set(card_detials).onError((error, stackTrace){
       print(error);

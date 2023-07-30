@@ -297,13 +297,15 @@ class _Travel_card_backState extends State<Travel_card_back> {
                       Text(widget.email,style: TextStyle(fontSize: 12,color: Colors.grey[600]),),
                     ],
                   ),
-                  // Expanded(child: SizedBox(width: 1,)),
-                  if(widget.email==FirebaseAuth.instance.currentUser!.email)IconButton(
+                  Expanded(child: SizedBox(width: 1,)),
+                  if(widget.email==FirebaseAuth.instance.currentUser!.email)
+                  IconButton(
                     onPressed: (){
                       dataservice.delete(widget.index);
                     }, 
-                    icon: Icon(Icons.delete)
-                    ),
+                    icon: Icon(Icons.delete_outline)
+                    )
+                  else  
                   IconButton(
                     onPressed: ()async{
                       launchmail(widget.email);
