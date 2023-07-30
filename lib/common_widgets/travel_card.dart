@@ -233,7 +233,8 @@ class Travel_card_back extends StatefulWidget {
   final List<dynamic> companions;
   final String msg;
   final int index;
-  const Travel_card_back({super.key, required this.displayname, required this.email, required this.companions, required this.msg, required this.index});
+  final Function callback;
+  const Travel_card_back({super.key, required this.displayname, required this.email, required this.companions, required this.msg, required this.index, required this.callback});
 
   @override
   State<Travel_card_back> createState() => _Travel_card_backState();
@@ -302,6 +303,7 @@ class _Travel_card_backState extends State<Travel_card_back> {
                   IconButton(
                     onPressed: (){
                       dataservice.delete(widget.index);
+                      widget.callback();
                     }, 
                     icon: Icon(Icons.delete_outline)
                     )

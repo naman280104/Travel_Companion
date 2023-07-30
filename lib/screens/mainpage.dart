@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:duration_picker_dialog_box/duration_picker_dialog_box.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_card/flip_card.dart';
@@ -17,6 +19,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Map<int,GlobalKey<FlipCardState>> cardKeys={};                  
+
+  void resetCards() {
+    cardKeys.forEach((key, value) {
+      if (!value.currentState!.isFront) {
+        value.currentState!.toggleCard();
+      }
+    },);
+    setState(() {});
+  }    
   @override
   Widget build(BuildContext context) {
     print(FirebaseAuth.instance.currentUser);
@@ -44,13 +56,15 @@ class _MainPageState extends State<MainPage> {
               child: SingleChildScrollView(
                 child: Obx(
                   ()=>Column(
-                    children: dataservice.cards.asMap().entries.map((e){
+                    children: dataservice.cards.asMap().entries.map((e){   
+                      cardKeys[e.key]=GlobalKey<FlipCardState>(); 
                       return Container(
                         padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
                         child: FlipCard(
+                          key: cardKeys[e.key],
                           fill: Fill.fillBack,
                           front: Travel_card(src: e.value["Source"], dst: e.value["Destination"], datetime: DateTime.fromMillisecondsSinceEpoch(e.value["date_time"]*1000), dur: e.value["Duration"], veh: e.value["Mode_of_transport"]),
-                          back: Travel_card_back(displayname: e.value['posted_by'][0],email: e.value['posted_by'][1],companions: e.value["companions"],msg: e.value["Message"],index: e.key,),
+                          back: Travel_card_back(displayname: e.value['posted_by'][0],email: e.value['posted_by'][1],companions: e.value["companions"],msg: e.value["Message"],index: e.key,callback:resetCards),
                         ),
                       );
                   }).toList(),
