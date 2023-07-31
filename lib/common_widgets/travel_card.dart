@@ -307,6 +307,9 @@ class _Travel_card_backState extends State<Travel_card_back> {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     }
+    else{
+      print("rfed");
+    }
   }
 
   @override
@@ -343,10 +346,13 @@ class _Travel_card_backState extends State<Travel_card_back> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.displayname,
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    Container(
+                      width: screensize.width*0.5,
+                      child: Text(
+                        widget.displayname,
+                        style:
+                            TextStyle(fontSize: 17, fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),
+                      ),
                     ),
                     Text(
                       widget.email,
